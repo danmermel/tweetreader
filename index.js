@@ -12,13 +12,12 @@ var client = new Twitter({
   access_token_secret: config.access_token_secret
 });
 
-// Load credentials and set the region from the JSON file
-AWS.config.loadFromPath('./config.json');
 
 var options = {
   q: "education OR school OR pupil OR student OR college",
-  geocode: "52.550370,-0.890966,200mi",
-  count: 2
+  geocode: "52.550370,-0.890966,200mi",  //this is the middle of the UK and a 200 mile radius around it. 
+  count: 25  //you can only batch write up to 25 items into dynamodb so this would be the upper limit
+  // we can add more params, like a time window etc
 }
 client.get('search/tweets', options, function (error, tweets, response) {
   console.log(tweets.statuses.length)
