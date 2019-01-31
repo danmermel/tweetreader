@@ -16,22 +16,23 @@ var write = function (data, callback) {
     }
   };
   params.RequestItems[table] = []
-  for (var i =0; i<data.statuses.length; i++) {
+  for (var i = 0; i < data.statuses.length; i++) {
     var obj = {
       PutRequest: {
         Item: {}
       }
     };
-    obj.PutRequest.Item.text = { S: data.statuses[i].text};
-    var url = "https://twitter.com/statuses/"+data.statuses[i].id_str
+    obj.PutRequest.Item.text = { S: data.statuses[i].text };
+    var url = "https://twitter.com/statuses/" + data.statuses[i].id_str
     obj.PutRequest.Item.url = { S: url };
     obj.PutRequest.Item.tweetid = { S: data.statuses[i].id_str };
 
     params.RequestItems[table].push(obj);
-    console.log(JSON.stringify(params))
-    dynamodb.batchWriteItem(params, callback);
-
   };
+  // console.log(JSON.stringify(params))
+  dynamodb.batchWriteItem(params, callback);
+
+
 }
 
 
